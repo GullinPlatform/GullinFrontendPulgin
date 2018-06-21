@@ -8,7 +8,7 @@ File: Main Css
    Menu
  =============*/
 .wrapper {
-  padding-top: 120px;
+  padding-top: 80px;
 }
 
 .page-title-box {
@@ -5355,6 +5355,21 @@ h3.timeline-title {
   font-weight: 700;
   line-height: 70px;
   color: #2B2E58 !important;
+}
+
+.logo-lg-2 {
+  font-size: 45px !important;
+  font-weight: 700;
+  line-height: 70px;
+  color: #2B2E58 !important;
+  margin: 0px;
+}
+
+.center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
 }
 
 .user-thumb img {

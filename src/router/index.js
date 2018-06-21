@@ -14,6 +14,12 @@ import SettingsView from '../views/main_pages/settings/Settings'
 import SettingsVerificationView from '../views/main_pages/settings/SettingsVerification'
 import SettingsSecurityView from '../views/main_pages/settings/SettingsSecurity'
 
+import UserSignUpPluginView from '../views/main_pages/user_auth/UserSignUpPlugin'
+import KYCVerificationPluginView from '../views/main_pages/user_auth/KYCVerificationPlugin'
+import UserSignUpFollowUpPluginView from '../views/main_pages/user_auth/UserSignUpFollowUpPlugin'
+import InvestPlugin from '../views/main_pages/user_auth/InvestPlugin'
+
+
 // Error Pages
 import NotFoundView from '../views/error_pages/404'
 
@@ -113,6 +119,26 @@ export default new Router({
     component: UserSignUpView,
     name: 'user_signup',
     beforeEnter: isNotAuthenticated,
+  }, {
+    path: '/:company_name/signupPlugin/',
+    component: UserSignUpPluginView,
+    name: 'user_signup_plugin',
+    beforeEnter: isNotAuthenticated,
+  },{
+    path: '/signupPlugin/followup',
+    component: UserSignUpFollowUpPluginView,
+    name: 'user_signup_plugin_followup',
+    beforeEnter: isNotAuthenticated,
+  },{
+    path: '/:company_name/InvestPlugin/',
+    component: InvestPlugin,
+    name: 'invest_plugin',
+    beforeEnter: isAuthenticatedAndVerified,
+  }, {
+    path: '/:company_name/documentVerification',
+    component: KYCVerificationPluginView,
+    name: 'kyc_verification_plugin',
+    beforeEnter: isAuthenticatedAndVerified,
   }, {
     path: '/com',
     component: UserSignUpView,

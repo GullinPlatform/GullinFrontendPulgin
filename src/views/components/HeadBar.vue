@@ -81,41 +81,8 @@
       </div>
       <!-- end container -->
     </div>
-    <!-- end topbar-main -->
-    <div class="navbar-custom" v-if="is_login&&$route.name!=='user_signup_followup'">
-      <div class="container-fluid">
-        <div id="navigation">
-          <!-- Navigation Menu-->
-          <ul class="navigation-menu">
-            <li class="has-submenu" :class="{active: $route.name === 'dashboard'}">
-              <router-link :to="{name:'dashboard'}">
-                <i class="ti-home"></i>Dashboard
-              </router-link>
-            </li>
-            <li class="has-submenu" :class="{active: $route.name === 'token_sale_list' || $route.name === 'token_sale_detail'}">
-              <router-link :to="{name:'token_sale_list'}">
-                <i class="ti-star"></i>Buy Tokens
-              </router-link>
-            </li>
 
-            <li class="has-submenu" :class="{active: $route.name === 'wallet'}">
-              <router-link :to="{name:'wallet'}">
-                <i class="ti-wallet"></i>My Wallet
-              </router-link>
-            </li>
 
-            <li class="has-submenu" :class="{active: $route.name === 'settings'}">
-              <router-link :to="{name:'settings'}">
-                <i class="ti-settings"></i>Settings
-              </router-link>
-            </li>
-          </ul>
-          <!-- End navigation menu -->
-        </div>
-        <!-- end #navigation -->
-      </div>
-      <!-- end container -->
-    </div>
     <!-- end navbar-custom -->
   </header>
   <!-- End Navigation Bar-->
