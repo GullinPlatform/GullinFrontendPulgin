@@ -2,11 +2,13 @@
   <div class="wrapper">
     <div class="container-fluid">
       <div class="row">
+
         <div class="col-sm-12">
           <div class="page-title-box">
               <h4 class="page-title">Invest</h4>
           </div>
         </div>
+
       </div>
       <div class="card-box">
 
@@ -80,18 +82,24 @@
                   <div class="text-center">
                     <a :href="'https://etherscan.io/address/' + me_wallet.eth_address" target="_blank" class="btn btn-primary text-white">See On Etherscan</a>
                   </div>
+                    <div class="form-group row justify-content-md-center mt-4">
                   <div class="col-xl-2 col-lg-3">
-                    <button class="btn btn-primary btn-block" @click="update_address()">Next Step</button>
+                    <button class="btn btn-primary btn-block" @click="get_balance()">Next Step</button>
                   </div>
+                </div>
                 </div>
 
             </div>
+
           </div>
-          <div v-show="step===2">
+          <div v-show="step===2" v-if='this.eth_balance==0'>
+              <div class="form-group row justify-content-md-center mt-4">
             <div class="col-xl-2 col-lg-3">
               <button class="btn btn-primary btn-block" @click="update_address()">Next Step</button>
             </div>
           </div>
+          </div>
+
           <div v-show="step===3">
 
 
@@ -234,10 +242,12 @@
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
 
+              <div class="form-group row justify-content-md-center mt-4">
 
             <div class="col-xl-2 col-lg-3">
               <button class="btn btn-primary btn-block" @click="update_address()">Next Step</button>
             </div>
+          </div>
 
           </div>
 
@@ -247,6 +257,7 @@
 
 
         </div>
+
         <div class="tab-content px-3 text-center" v-else-if="verification_level===3 ||step===4">
           <div class="form-group row justify-content-md-center mt-4">
             <div class=" col-lg-6">
@@ -256,6 +267,7 @@
             </div>
           </div>
         </div>
+
         <div class="tab-content px-3" v-else-if="verification_level===4">
           <div class="form-group row justify-content-md-center mt-4">
             <div class="col-xl-4 col-lg-6">
@@ -268,6 +280,7 @@
             </div>
           </div>
         </div>
+
         <div class="tab-content px-3" v-else-if="verification_level===5">
           <div class="form-group row justify-content-md-center mt-4">
             <div class="col-xl-4 col-lg-6">
@@ -277,6 +290,7 @@
             </div>
           </div>
         </div>
+
         <div class="tab-content px-3" v-else-if="verification_level===6">
           <div class="form-group row justify-content-md-center mt-4">
             <div class="col-xl-4 col-lg-6">
@@ -344,6 +358,8 @@
         tx_loading: false,
 
         error_message: '',
+        loading: false,
+        ether_ballance: 0,
       }
     },
     computed: {
@@ -358,14 +374,38 @@
         balances: 'balances',
         me: 'me',
       }),
-      eth_balance() {
-        for (const balance of this.balances) {
-          if (balance.token.token_code === 'ETH')
-            return balance.balance
-        }
-      }
     },
     methods: {
+      get_balance() {
+          this.step += 1
+
+        if (this.eth_balance == 0){
+
+          setInterval(function () {
+              this.get_eth_balance();
+          }.bind(this), 30000);
+
+      } else {
+        this.get_eth_balance();
+      }
+      },
+
+      get_eth_balance() {
+        this.$store.dispatch('syncEthBalance', this)
+          .then(() => {
+
+              if (response.result != 0)
+              {
+                loading = false,
+                this.eth_balance = response.result
+              }
+
+          })
+          .catch((error) => {
+            this.error_message = error.data.error
+          })
+      },
+
       update_personal_detail() {
         if (!(this.birthday_year && this.birthday_month && this.birthday_day)) {
           this.error_message = 'Birthday is required'
@@ -556,6 +596,10 @@
         if (!this.private_key) return
 
         this.show_invest_summary = true
+      },
+
+      getETHBalanceByAddress(){
+
       },
 
       sendEth() {
